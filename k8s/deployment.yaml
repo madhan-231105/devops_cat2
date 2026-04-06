@@ -14,18 +14,6 @@ spec:
     spec:
       containers:
       - name: backend
-        image: madhan/backend
+        image: madhan2311/backend:latest
         ports:
         - containerPort: 5000
-        volumeMounts:
-        - mountPath: "/data"
-          name: storage
-      volumes:
-      - name: storage
-        persistentVolumeClaim:
-          claimName: backend-pvc
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
