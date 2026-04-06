@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/madhan-231105/devops_cat2.git'
+            }
+        }
+
+        stage('Install Backend') {
+            steps {
+                dir('backend') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Lint') {
+            steps {
+                dir('backend') {
+                    sh 'npm run lint || true'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('backend') {
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('Build Docker') {
+            steps {
+                sh 'docker build -t madhan/backend -f docker/backend.Dockerfile .'
+            }
+        }
+
+        stage('Push Docker') {
+            steps {
+                sh 'docker push madhan/backend'
+            }
+        }
+    }
+}

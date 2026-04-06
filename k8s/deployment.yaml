@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: madhan/backend
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: "/data"
+          name: storage
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: backend-pvc
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
