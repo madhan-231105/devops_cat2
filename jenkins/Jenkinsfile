@@ -37,14 +37,13 @@ pipeline {
             }
         }
 
-        // OPTIONAL (if Sonar configured)
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    sh 'sonar-scanner'
-                }
-            }
+stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('sonar') {
+            sh 'sonar-scanner'
         }
+    }
+}
 
         stage('Build Docker') {
             steps {
